@@ -13,7 +13,6 @@
   html, body {
     margin: 0;
     height: 100%;
-    height: 100dvh;
     overscroll-behavior: none;
     -webkit-touch-callout: none;
     -webkit-tap-highlight-color: transparent;
@@ -776,8 +775,9 @@
 
   // Fit canvas to screen while keeping aspect ratio
   function fit() {
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
+    // Measure the body, not the window, so safe-area padding is respected
+    const vw = document.body.clientWidth || window.innerWidth;
+    const vh = document.body.clientHeight || window.innerHeight;
     // Only reshape the world between rounds, never mid-flight
     if (state !== "playing") {
       const want = vh / vw > 640 / 400 ? Math.round((W * vh) / vw) : 640;
